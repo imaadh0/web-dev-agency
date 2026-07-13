@@ -32,3 +32,5 @@
 
 /* responsive media integrity */
 html,body{width:100%;max-width:100%;overflow-x:clip}.page-wrap,main,section{min-width:0;max-width:100%}.home-hero>video,.page-hero>video,.feature-video video,.work-video video{display:block;left:-10%;right:auto;width:160%;max-width:none;height:120%;top:-10%;bottom:auto;object-fit:cover}.capability-feature>*{min-width:0}@media(max-width:560px){.service-teasers article{grid-template-columns:35px 1fr}.service-teasers article p{grid-column:2;margin-top:.65rem}.logo-track{animation-duration:13s}.logo-group{width:840px}}@media(prefers-reduced-motion:reduce){.logo-track{animation:none;transform:translateX(-10%)}}
+
+.home-hero>video.logo-reveal-video{inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
