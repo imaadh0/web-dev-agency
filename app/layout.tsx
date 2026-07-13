@@ -1,24 +1,7 @@
-﻿import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+﻿import type {Metadata} from "next";
+import {Geist,Geist_Mono} from "next/font/google";
+import {SiteFrame} from "./components/SiteFrame";
 import "./globals.css";
-
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://fortypixels.com"),
-  title: "Forty Pixels | Premium web design & development agency",
-  description: "Premium web design and development for startups and growing brands.",
-  icons: { icon: "/brand/logo.png", shortcut: "/brand/logo.png" },
-  openGraph: {
-    title: "Forty Pixels | Clarity over complexity.",
-    description: "Premium digital experiences for ambitious brands.",
-    type: "website",
-    images: [{ url: "/og.png", width: 1792, height: 912, alt: "Forty Pixels — Clarity over complexity." }],
-  },
-  twitter: { card: "summary_large_image", title: "Forty Pixels | Clarity over complexity.", description: "Premium digital experiences for ambitious brands.", images: ["/og.png"] },
-};
-
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body></html>;
-}
+const sans=Geist({variable:"--font-sans",subsets:["latin"]});const mono=Geist_Mono({variable:"--font-mono",subsets:["latin"]});
+export const metadata:Metadata={metadataBase:new URL("https://fortypixels.com"),title:{default:"Forty Pixels | Strategy, design & engineering",template:"%s | Forty Pixels"},description:"Strategy, design and engineering for ambitious businesses.",icons:{icon:"/brand/logo.png"},openGraph:{title:"Forty Pixels — Built to move business forward",description:"Strategy, design and engineering for ambitious businesses.",images:[{url:"/og.png",width:1792,height:912}]},twitter:{card:"summary_large_image",images:["/og.png"]}};
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body className={`${sans.variable} ${mono.variable}`}><SiteFrame>{children}</SiteFrame></body></html>}
