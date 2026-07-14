@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {usePathname,useRouter} from "next/navigation";
+import {usePathname} from "next/navigation";
 import {createContext,useContext,useEffect,useRef,useState} from "react";
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
@@ -51,8 +51,8 @@ function Footer(){
 }
 
 export function SiteFrame({children}:{children:React.ReactNode}){
- const pathname=usePathname();const router=useRouter();const curtain=useRef<HTMLDivElement>(null);const [target,setTarget]=useState("");
- const go=(href:string)=>{if(href===pathname)return;setTarget(href);const name=href==="/"?"Home":href.split("/").filter(Boolean).pop()?.replaceAll("-"," ")||"Next";const label=curtain.current?.querySelector("strong");if(label)label.textContent=name;gsap.timeline().set(curtain.current,{yPercent:100,display:"grid"}).to(curtain.current,{yPercent:0,duration:.75,ease:"power4.inOut"}).add(()=>router.push(href))};
+ const pathname=usePathname();const curtain=useRef<HTMLDivElement>(null);const [target,setTarget]=useState("");
+ const go=(href:string)=>{if(href===pathname)return;setTarget(href);const name=href==="/"?"Home":href.split("/").filter(Boolean).pop()?.replaceAll("-"," ")||"Next";const label=curtain.current?.querySelector("strong");if(label)label.textContent=name;gsap.timeline().set(curtain.current,{yPercent:100,display:"grid"}).to(curtain.current,{yPercent:0,duration:.75,ease:"power4.inOut"}).add(()=>window.location.assign(href))};
  useEffect(()=>{gsap.registerPlugin(ScrollTrigger);const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;const lenis=new Lenis({lerp:.1,smoothWheel:!reduce});lenis.on("scroll",ScrollTrigger.update);const tick=(t:number)=>lenis.raf(t*1000);gsap.ticker.add(tick);gsap.ticker.lagSmoothing(0);window.scrollTo(0,0);
   const ctx=gsap.context(()=>{
    const pre=document.querySelector<HTMLElement>(".global-preloader");if(pre&&sessionStorage.getItem("fp-preloader")!=="1"&&!reduce){lenis.stop();sessionStorage.setItem("fp-preloader","1");const n={v:0};gsap.timeline().to(n,{v:100,duration:2.8,ease:"power2.inOut",onUpdate:()=>{const el=pre.querySelector("strong");if(el)el.textContent=`${Math.round(n.v)}%`;pre.style.setProperty("--load",`${n.v}%`)}}).to(pre,{yPercent:-100,duration:1.2,ease:"power4.inOut"}).add(()=>{lenis.start();pre.remove()})}else pre?.remove();
