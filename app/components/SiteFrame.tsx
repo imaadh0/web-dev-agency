@@ -19,11 +19,10 @@ function Arrow(){return <span className="ui-arrow" aria-hidden><i /></span>}
 
 function Navigation(){
  const pathname=usePathname();const [open,setOpen]=useState(false);const go=useContext(NavContext);
- useEffect(()=>setOpen(false),[pathname]);
  return <header className={`site-nav ${open?"menu-is-open":""}`} data-theme="hero">
   <div className="nav-blur">{[1,2,3,4,5].map(i=><i key={i}/>)}</div>
   <div className="nav-bar">
-   <a href="/" className="nav-logo" onClick={e=>{e.preventDefault();go("/")}} aria-label="Forty Pixels home"><span className="nav-logo-mark"><img src="/brand/logo.png" alt="Forty Pixels"/><img className="nav-logo-contrast" src="/brand/logo.png" alt="" aria-hidden="true"/></span></a>
+   <Link href="/" className="nav-logo" onClick={e=>{e.preventDefault();go("/")}} aria-label="Forty Pixels home"><span className="nav-logo-mark"><img src="/brand/logo.png" alt="Forty Pixels"/><img className="nav-logo-contrast" src="/brand/logo.png" alt="" aria-hidden="true"/></span></Link>
    <nav className="nav-cells" aria-label="Primary navigation">{pages.map(p=><a key={p.href} href={p.href} className={pathname===p.href||pathname.startsWith(`${p.href}/`)?"active":""} onClick={e=>{e.preventDefault();go(p.href)}}>{p.label}</a>)}</nav>
    <a href="/contact" className={`nav-contact ${pathname==="/contact"?"active":""}`} onClick={e=>{e.preventDefault();go("/contact")}}>Contact <Arrow/></a>
    <button className="nav-toggle" onClick={()=>setOpen(v=>!v)} aria-expanded={open} aria-label={open?"Close menu":"Open menu"}><span>{open?"×":"Menu"}</span></button>
@@ -37,7 +36,7 @@ function Footer(){
  return <footer className="sstr-footer" data-nav-theme="dark">
   <div className="footer-shell">
    <div className="footer-main">
-    <div className="footer-identity"><a href="/" className="footer-mark"><span>FORTY</span><span>PIXELS<span className="lime-dot">.</span></span></a><p>Premium digital experiences for ambitious businesses.</p><div className="footer-location"><span>COLOMBO, SRI LANKA</span><span>WORKING WORLDWIDE</span></div></div>
+    <div className="footer-identity"><Link href="/" className="footer-mark"><span>FORTY</span><span>PIXELS<span className="lime-dot">.</span></span></Link><p>Premium digital experiences for ambitious businesses.</p><div className="footer-location"><span>COLOMBO, SRI LANKA</span><span>WORKING WORLDWIDE</span></div></div>
     <div className="footer-directory">
      <div><span className="footer-label">Pages</span><div className="footer-list"><TransitionLink href="/about">About</TransitionLink><TransitionLink href="/work">Work</TransitionLink><TransitionLink href="/services">Services</TransitionLink><TransitionLink href="/enterprise">Enterprise</TransitionLink><TransitionLink href="/contact">Contact</TransitionLink></div></div>
      <div><span className="footer-label">Start a project</span><a href="mailto:hello@fortypixels.com" className="footer-email">hello@fortypixels.com <Arrow/></a><a href="https://calendly.com/" target="_blank" rel="noreferrer" className="footer-book">Book a discovery call <Arrow/></a></div>
@@ -67,5 +66,5 @@ export function SiteFrame({children}:{children:React.ReactNode}){
   });
   return()=>{ctx.revert();ScrollTrigger.getAll().forEach(t=>t.kill());gsap.ticker.remove(tick);lenis.destroy()}
  },[pathname]);
- return <NavContext.Provider value={go}><div className="global-preloader"><span>// FORTY PIXELS — LOADING</span><strong>0%</strong><i/></div><div ref={curtain} className="route-curtain"><small>// LOADING PAGE</small><strong>{target}</strong></div><Navigation/><div className="page-wrap">{children}</div><Footer/></NavContext.Provider>
+ return <NavContext.Provider value={go}><div className="global-preloader"><span>{"// FORTY PIXELS — LOADING"}</span><strong>0%</strong><i/></div><div ref={curtain} className="route-curtain"><small>{"// LOADING PAGE"}</small><strong>{target}</strong></div><Navigation/><div className="page-wrap">{children}</div><Footer/></NavContext.Provider>
 }
