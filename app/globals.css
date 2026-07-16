@@ -80,3 +80,11 @@ img,video{max-width:100%}img{height:auto}input,select,textarea,button{max-width:
 .browser-frame img[src*='noora-modesty']{filter:invert(1)}
 .browser-frame img[src*='noora-modesty']{filter:brightness(0)!important}
 .case-browser img[src*='noora-modesty']{filter:brightness(0)!important}
+/* Scale only the navigation on wide displays. */
+@media(min-width:1600px){
+  :root{--nav:clamp(88px,5.5vw,108px)}
+  .nav-logo{width:clamp(300px,18vw,440px)}
+  .nav-logo-mark{max-width:clamp(220px,10vw,320px)}
+  .nav-cells a,.nav-contact{font-size:clamp(.85rem,.8vw,1.25rem);padding-inline:clamp(1.75rem,2.2vw,3.5rem)}
+  .nav-contact{gap:1.35rem}
+}
