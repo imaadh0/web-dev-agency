@@ -162,5 +162,5 @@ export function SiteFrame({children}:{children:React.ReactNode}){
   });
   return()=>{window.removeEventListener("pageshow",restoreFromHistory);ctx.revert();ScrollTrigger.getAll().forEach(t=>t.kill());gsap.ticker.remove(tick);lenis.destroy()}
  },[pathname]);
- return <NavContext.Provider value={go}><div className="global-preloader"><span>{"// FORTY PIXELS — LOADING"}</span><strong>0%</strong><i/></div><div ref={curtain} className="route-curtain"><small>{"// LOADING PAGE"}</small><strong>{target}</strong></div><Navigation/><div className="page-wrap">{children}</div><Footer/></NavContext.Provider>
+ return <NavContext.Provider value={go}><div className="global-preloader"><span>{"// FORTY PIXELS — LOADING"}</span><strong>0%</strong><i/></div><div ref={curtain} className="route-curtain"><strong>{target}</strong></div><Navigation/><div className="page-wrap">{children}</div><Footer/></NavContext.Provider>
 }
