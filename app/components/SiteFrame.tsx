@@ -132,15 +132,15 @@ function Footer(){
  return <footer className="sstr-footer" data-nav-theme="dark">
   <div className="footer-shell">
    <div className="footer-main">
-    <div className="footer-identity"><Link href="/" className="footer-mark"><span>FORTY</span><span>PIXELS<span className="lime-dot">.</span></span></Link><p>Premium digital experiences for ambitious businesses.</p><div className="footer-location"><span>COLOMBO, SRI LANKA</span><span>WORKING WORLDWIDE</span></div></div>
+    <div className="footer-identity"><Link href="/" className="footer-mark"><span>FORTY</span><span>PIXELS<span className="lime-dot">.</span></span></Link><p>Clarity over complexity.</p><div className="footer-location"><span>COLOMBO, SRI LANKA</span><span>© 2026 FORTY PIXELS</span></div></div>
     <div className="footer-directory">
-     <div><span className="footer-label">Pages</span><div className="footer-list"><TransitionLink href="/about">About</TransitionLink><TransitionLink href="/portfolio">Portfolio</TransitionLink><TransitionLink href="/services">Services</TransitionLink><TransitionLink href="/contact">Contact</TransitionLink></div></div>
-     <div><span className="footer-label">Start a project</span><a href="mailto:hello@fortypixels.com" className="footer-email">hello@fortypixels.com <Arrow/></a><a href="https://calendly.com/" target="_blank" rel="noreferrer" className="footer-book">Book a discovery call <Arrow/></a></div>
-     <form className="footer-subscribe" action="mailto:hello@fortypixels.com" method="post" encType="text/plain"><label htmlFor="footer-email">Useful notes for founders</label><div><input id="footer-email" type="email" name="newsletter" required placeholder="Your email"/><button aria-label="Subscribe"><span className="ui-arrow" aria-hidden><i /></span></button></div><small>No spam. Only practical design and website advice.</small></form>
-     <div className="footer-socials"><span className="footer-label">Follow</span><div><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">ig</a><a href="#" aria-label="X">x</a></div></div>
+     <div><span className="footer-label">Pages</span><div className="footer-list"><TransitionLink href="/about">About</TransitionLink><TransitionLink href="/portfolio">Portfolio</TransitionLink><TransitionLink href="/services">Services</TransitionLink><TransitionLink href="/contact">Contact</TransitionLink></div></div><div><span className="footer-label">Start a project</span><a href="mailto:hello@fortypixels.com" className="footer-email">hello@fortypixels.com <Arrow/></a><a href="https://calendly.com/" target="_blank" rel="noreferrer" className="footer-book">Book a discovery call <Arrow/></a><form className="footer-subscribe" action="mailto:hello@fortypixels.com" method="post" encType="text/plain"><div><input id="footer-email" type="email" name="newsletter" required placeholder="Your email"/><button aria-label="Subscribe"><span className="ui-arrow" aria-hidden><i /></span></button></div><small>No spam. Only practical design and website advice.</small></form></div>
+
+
+     <div className="footer-socials"><span className="footer-label">Follow</span><div><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" strokeWidth="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" strokeWidth="1.8"/><circle cx="17.5" cy="6.5" r="1.1"/></svg></a><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.75l.5-3H13.5V9.05c0-.87.29-1.55 1.6-1.55h1.78V4.82c-.31-.04-1.37-.14-2.6-.14-2.57 0-4.33 1.57-4.33 4.45V11H7.1v3h2.85v8h3.55Z"/></svg></a><a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.5c.6 2.2 2 3.7 4.5 4v3.2c-1.9-.1-3.4-.7-4.5-1.5v6.9a5.9 5.9 0 1 1-5.1-5.85v3.3a2.7 2.7 0 1 0 1.9 2.55V3.5h3.2Z"/></svg></a></div></div>
     </div>
    </div>
-   <div className="footer-bottom"><span>© 2026 FORTY PIXELS</span><span>VIDEO FOOTAGE: <a href="https://coverr.co" target="_blank" rel="noreferrer">COVERR</a></span><a href="#top">BACK TO TOP <span className="text-arrow" aria-hidden /></a></div>
+
   </div>
  </footer>
 }
