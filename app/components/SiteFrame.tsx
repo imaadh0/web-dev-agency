@@ -8,7 +8,7 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
 const pages=[
- {href:"/work",label:"Work"},{href:"/about",label:"About"},{href:"/services",label:"Services"},{href:"/enterprise",label:"Enterprise"}
+ {href:"/portfolio",label:"Portfolio"},{href:"/about",label:"About"},{href:"/services",label:"Services"}
 ];
 const NavContext=createContext<(href:string)=>void>(()=>{});
 export function TransitionLink({href,children,className=""}:{href:string;children:React.ReactNode;className?:string}){
@@ -38,7 +38,7 @@ function Footer(){
    <div className="footer-main">
     <div className="footer-identity"><Link href="/" className="footer-mark"><span>FORTY</span><span>PIXELS<span className="lime-dot">.</span></span></Link><p>Premium digital experiences for ambitious businesses.</p><div className="footer-location"><span>COLOMBO, SRI LANKA</span><span>WORKING WORLDWIDE</span></div></div>
     <div className="footer-directory">
-     <div><span className="footer-label">Pages</span><div className="footer-list"><TransitionLink href="/about">About</TransitionLink><TransitionLink href="/work">Work</TransitionLink><TransitionLink href="/services">Services</TransitionLink><TransitionLink href="/enterprise">Enterprise</TransitionLink><TransitionLink href="/contact">Contact</TransitionLink></div></div>
+     <div><span className="footer-label">Pages</span><div className="footer-list"><TransitionLink href="/about">About</TransitionLink><TransitionLink href="/portfolio">Portfolio</TransitionLink><TransitionLink href="/services">Services</TransitionLink><TransitionLink href="/contact">Contact</TransitionLink></div></div>
      <div><span className="footer-label">Start a project</span><a href="mailto:hello@fortypixels.com" className="footer-email">hello@fortypixels.com <Arrow/></a><a href="https://calendly.com/" target="_blank" rel="noreferrer" className="footer-book">Book a discovery call <Arrow/></a></div>
      <form className="footer-subscribe" action="mailto:hello@fortypixels.com" method="post" encType="text/plain"><label htmlFor="footer-email">Useful notes for founders</label><div><input id="footer-email" type="email" name="newsletter" required placeholder="Your email"/><button aria-label="Subscribe"><span className="ui-arrow" aria-hidden><i /></span></button></div><small>No spam. Only practical design and website advice.</small></form>
      <div className="footer-socials"><span className="footer-label">Follow</span><div><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">ig</a><a href="#" aria-label="X">x</a></div></div>
@@ -51,7 +51,7 @@ function Footer(){
 
 export function SiteFrame({children}:{children:React.ReactNode}){
  const pathname=usePathname();const curtain=useRef<HTMLDivElement>(null);const [target,setTarget]=useState("");
- const go=(href:string)=>{if(href===pathname)return;setTarget(href);const name=href==="/"?"Home":href.split("/").filter(Boolean).pop()?.replaceAll("-"," ")||"Next";const label=curtain.current?.querySelector("strong");if(label)label.textContent=name;gsap.timeline().set(curtain.current,{yPercent:100,display:"grid"}).to(curtain.current,{yPercent:0,duration:.75,ease:"power4.inOut"}).add(()=>window.location.assign(href))};
+ const go=(href:string)=>{if(href===pathname)return;const name=href==="/"?"Home":href.split("/").filter(Boolean).pop()?.replaceAll("-"," ")||"Next";setTarget(name);const label=curtain.current?.querySelector("strong");if(label)label.textContent=name;gsap.timeline().set(curtain.current,{yPercent:100,display:"grid"}).to(curtain.current,{yPercent:0,duration:.75,ease:"power4.inOut"}).add(()=>window.location.assign(href))};
  useEffect(()=>{const restoreFromHistory=(event:PageTransitionEvent)=>{if(!event.persisted)return;document.querySelector(".global-preloader")?.remove();if(curtain.current){curtain.current.style.display="none";curtain.current.style.transform="translateY(-100%)"}if(typeof lenis!=="undefined")lenis.start();};window.addEventListener("pageshow",restoreFromHistory);gsap.registerPlugin(ScrollTrigger);const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;const lenis=new Lenis({lerp:.1,smoothWheel:!reduce});lenis.on("scroll",ScrollTrigger.update);const tick=(t:number)=>lenis.raf(t*1000);gsap.ticker.add(tick);gsap.ticker.lagSmoothing(0);window.scrollTo(0,0);
   const ctx=gsap.context(()=>{
    const pre=document.querySelector<HTMLElement>(".global-preloader");if(pre&&sessionStorage.getItem("fp-preloader")!=="1"&&!reduce){lenis.stop();sessionStorage.setItem("fp-preloader","1");const n={v:0};gsap.timeline().to(n,{v:100,duration:2.8,ease:"power2.inOut",onUpdate:()=>{const el=pre.querySelector("strong");if(el)el.textContent=`${Math.round(n.v)}%`;pre.style.setProperty("--load",`${n.v}%`)}}).to(pre,{yPercent:-100,duration:1.2,ease:"power4.inOut"}).add(()=>{lenis.start();pre.remove()})}else pre?.remove();
