@@ -61,3 +61,22 @@ img,video{max-width:100%}img{height:auto}input,select,textarea,button{max-width:
 @media(max-width:720px){.offer-grid article{min-height:520px}.offer-grid article>p{min-height:0}.offer-demo{width:100%;height:285px;margin-top:2rem}.brand-pages span{font-size:.48rem}.system-map>span{width:84px}}
 @media(max-width:360px){.offer-demo{height:270px;padding:.8rem}.demo-browser{left:.8rem;right:.8rem}.brand-pages{gap:.2rem}.brand-pages span{font-size:.4rem;padding-inline:.05rem}.system-map>span{width:70px}.system-health{left:.8rem;right:.8rem}}
 @media(prefers-reduced-motion:reduce){.offer-demo [data-demo-item]{opacity:1!important;transform:none!important}.offer-demo [data-demo-bar]{transform:scaleX(1)!important}}
+/* Case-study live website action */
+.project-actions{display:flex;flex:0 0 auto;gap:.5rem;flex-wrap:wrap;justify-content:flex-end}
+.project-site-link{background:var(--ink);color:var(--white)}
+.project-card:hover .project-link{background:var(--ink);color:var(--white)}
+.project-card:hover .project-link:hover{background:var(--white);color:var(--ink)}
+@media(max-width:1200px){.project-actions{align-self:stretch;justify-content:flex-start}.project-link{flex:1 1 auto;justify-content:space-between}}
+@media(max-width:480px){.project-actions{width:100%}}
+
+.case-site-link{display:inline-flex;align-items:center;gap:1rem;margin-top:1.5rem;padding:.9rem 1.1rem;border:1px solid currentColor;text-transform:uppercase;font:700 .62rem var(--font-mono),monospace;letter-spacing:.07em;transition:background .25s,color .25s}
+.case-site-link:hover{background:var(--ink);color:var(--white)}
+/* Give the shared case-study table comfortable spacing. */
+.system-grid article{min-height:300px;padding:clamp(1.75rem,2.6vw,3rem)}
+.system-grid h3{margin:1.15rem 0 .85rem;line-height:1.1}
+.system-grid p{max-width:34rem;margin:0;line-height:1.65}
+.case-system .system-grid article{padding-left:clamp(1.75rem,2.6vw,3rem)}
+@media(max-width:720px){.case-system .system-grid article{min-height:0;padding:1.75rem 1.25rem}}
+.browser-frame img[src*='noora-modesty']{filter:invert(1)}
+.browser-frame img[src*='noora-modesty']{filter:brightness(0)!important}
+.case-browser img[src*='noora-modesty']{filter:brightness(0)!important}
