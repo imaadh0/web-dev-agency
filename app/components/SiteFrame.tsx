@@ -17,6 +17,102 @@ export function TransitionLink({href,children,className=""}:{href:string;childre
 
 function Arrow(){return <span className="ui-arrow" aria-hidden><i /></span>}
 
+/* Choreographed offer-card demos: each card gets its own scripted loop. */
+function launchDemo(demo:HTMLElement){
+ const items=demo.querySelectorAll<HTMLElement>("[data-demo-item]");
+ const dot=demo.querySelector<HTMLElement>("[data-demo-pulse]");
+ const typeEl=demo.querySelector<HTMLElement>("[data-demo-type]");const screen=demo.querySelector<HTMLElement>(".launch-screen");
+ const btn=demo.querySelector<HTMLElement>(".demo-button");const cursor=demo.querySelector<HTMLElement>(".demo-cursor");const ripple=demo.querySelector<HTMLElement>(".demo-ripple");
+ if(!dot||!typeEl||!screen||!btn||!cursor||!ripple)return null;
+ const url=typeEl.dataset.demoType||"";typeEl.textContent="";
+ gsap.set(items,{autoAlpha:0,y:14});
+ const chars={n:0};
+ /* Page builds once and stays; the cursor-click action replays forever. */
+ const tl=gsap.timeline({paused:true})
+  .to(chars,{n:url.length,duration:.8,ease:"none",onUpdate:()=>{typeEl.textContent=url.slice(0,Math.round(chars.n))}},.2)
+  .to(items,{autoAlpha:1,y:0,duration:.6,stagger:.17,ease:"back.out(1.7)"},.55);
+ const act=gsap.timeline({repeat:-1,repeatDelay:.9})
+  .set(cursor,{x:()=>screen.offsetWidth-26,y:()=>screen.offsetHeight-16,scale:1},0)
+  .to(cursor,{autoAlpha:1,duration:.25},.05)
+  .to(cursor,{x:()=>btn.offsetLeft+btn.offsetWidth*.7,y:()=>btn.offsetTop+btn.offsetHeight*.55,duration:.75,ease:"power2.inOut"},.2)
+  .to(cursor,{scale:.78,duration:.12,yoyo:true,repeat:1,ease:"power2.in"},1.05)
+  .to(btn,{scale:.93,duration:.13,yoyo:true,repeat:1,ease:"power2.in",transformOrigin:"center center"},1.05)
+  .set(ripple,{scale:.4,autoAlpha:.9},1.15)
+  .to(ripple,{scale:2.3,autoAlpha:0,duration:.6,ease:"power2.out"},1.17)
+  .to(dot,{scale:1.6,duration:.28,yoyo:true,repeat:3,ease:"power1.inOut"},1.3)
+  .to(cursor,{autoAlpha:0,duration:.35},1.9)
+  .to({},{duration:1},2.4);
+ return tl.add(act,1.9)
+}
+function commerceDemo(demo:HTMLElement){
+ const product=demo.querySelector<HTMLElement>(".commerce-product");const add=demo.querySelector<HTMLElement>(".commerce-add");const fly=demo.querySelector<HTMLElement>(".commerce-fly");
+ const steps=gsap.utils.toArray<HTMLElement>(demo.querySelectorAll<HTMLElement>(".commerce-step"));
+ const dot=demo.querySelector<HTMLElement>("[data-demo-pulse]");
+ if(!product||!add||!fly||!dot||steps.length<3)return null;
+ const checks=steps.map(s=>s.querySelector<HTMLElement>("i")!);
+ gsap.set(product,{autoAlpha:0,y:12});gsap.set(steps,{autoAlpha:0,x:-12});gsap.set(checks,{scale:0});gsap.set(fly,{autoAlpha:0});
+ /* Product and steps build once and stay; the buying journey replays forever. */
+ const tl=gsap.timeline({paused:true})
+  .to(product,{autoAlpha:1,y:0,duration:.55,ease:"back.out(1.6)"},.2)
+  .to(steps,{autoAlpha:1,x:0,duration:.5,stagger:.12,ease:"power3.out"},.5);
+ const act=gsap.timeline({repeat:-1,repeatDelay:.8})
+  .to(add,{scale:1.35,duration:.16,yoyo:true,repeat:1,ease:"power2.out"},.1)
+  .set(fly,{x:()=>add.offsetLeft+add.offsetWidth/2-4,y:()=>add.offsetTop+add.offsetHeight/2-4,scale:1},.3)
+  .to(fly,{autoAlpha:1,duration:.1},.32)
+  .to(fly,{x:()=>steps[0].offsetLeft+steps[0].offsetWidth-26,y:()=>steps[0].offsetTop+steps[0].offsetHeight/2-4,scale:.55,duration:.5,ease:"power1.in"},.4)
+  .to(fly,{autoAlpha:0,duration:.12},.88);
+ [.95,1.5,2.05].forEach((t,i)=>{act.to(checks[i],{scale:1,duration:.5,ease:"back.out(3)"},t).to(steps[i],{scale:1.02,duration:.16,yoyo:true,repeat:1,ease:"power1.inOut"},t)});
+ return tl.add(act
+  .to(steps[2],{boxShadow:"0 0 0 9px rgba(104,66,206,.16)",duration:.4,yoyo:true,repeat:1,ease:"power1.inOut"},2.3)
+  .to(checks[2],{scale:1.3,duration:.22,yoyo:true,repeat:1,ease:"power1.inOut"},2.6)
+  .to(dot,{scale:1.6,duration:.28,yoyo:true,repeat:3,ease:"power1.inOut"},2.55)
+  .to({},{duration:.9},3.4)
+  .to(checks,{scale:0,duration:.3,ease:"power2.in"},4.3),1.15)
+}
+function systemsDemo(demo:HTMLElement){
+ const core=demo.querySelector<HTMLElement>(".system-core");const health=demo.querySelector<HTMLElement>(".system-health");
+ const rings=gsap.utils.toArray<HTMLElement>(demo.querySelectorAll<HTMLElement>(".system-ring"));
+ const lines=Array.from(demo.querySelectorAll<SVGLineElement>(".system-lines line"));
+ const nodes=gsap.utils.toArray<HTMLElement>(demo.querySelectorAll<HTMLElement>(".system-node"));
+ const tracks=gsap.utils.toArray<HTMLElement>(demo.querySelectorAll<HTMLElement>(".node-track"));
+ const packets=gsap.utils.toArray<HTMLElement>(demo.querySelectorAll<HTMLElement>(".system-packet"));
+ if(!core||!health||nodes.length<4||lines.length<4||packets.length<4||rings.length<2)return null;
+ const pos=[[16,15],[84,15],[16,85],[84,85]];
+ gsap.set(core,{scale:0,autoAlpha:0});gsap.set(nodes,{autoAlpha:0,scale:.7});gsap.set(health,{autoAlpha:0,y:10});
+ /* One-time build-in, then infinite ambient loops nested inside the master. */
+ const tl=gsap.timeline({paused:true})
+  .to(core,{scale:1,autoAlpha:1,duration:.5,ease:"back.out(2)"},.1)
+  .set(rings[0],{scale:.35,autoAlpha:.9},.3)
+  .to(rings[0],{scale:2.6,autoAlpha:0,duration:.9,ease:"power1.out"},.32)
+  .to(lines,{strokeDashoffset:0,duration:.5,stagger:.08,ease:"power2.out"},.35)
+  .to(nodes,{autoAlpha:1,scale:1,duration:.45,stagger:.08,ease:"back.out(1.8)"},.6)
+  .to(health,{autoAlpha:1,y:0,duration:.45,ease:"power3.out"},1.15);
+ const packetsTl=gsap.timeline({repeat:-1,repeatDelay:.5});
+ packets.forEach((p,i)=>{const t=i*.55;
+  packetsTl.set(p,{left:"50%",top:"50%"},t)
+   .to(p,{autoAlpha:1,duration:.12},t+.02)
+   .to(p,{left:`${pos[i][0]}%`,top:`${pos[i][1]}%`,duration:.55,ease:"power1.inOut"},t+.06)
+   .to(p,{autoAlpha:0,duration:.12},t+.52)
+   .to(nodes[i],{scale:1.08,duration:.16,yoyo:true,repeat:1,ease:"power1.inOut"},t+.52)});
+ const ringsTl=gsap.timeline({repeat:-1,repeatDelay:1.7})
+  .set(rings[1],{scale:.35,autoAlpha:.7},0)
+  .to(rings[1],{scale:2.4,autoAlpha:0,duration:1.1,ease:"power1.out"},.02)
+  .to(core,{scale:1.09,duration:.3,yoyo:true,repeat:1,ease:"power1.inOut"},0);
+ const labelsTl=gsap.timeline({repeat:-1});
+ [-26,-52,-78].forEach((y,i)=>labelsTl.to(tracks,{y,duration:.5,stagger:.06,ease:"power3.inOut"},1.6+i*2));
+ labelsTl.set(tracks,{y:0},6.5);
+ return tl.add(packetsTl,1.5).add(ringsTl,2.3).add(labelsTl,1.2)
+}
+function initOfferDemos(reduce:boolean){
+ gsap.utils.toArray<HTMLElement>(".offer-demo").forEach(demo=>{
+  if(reduce)return;
+  const kind=demo.dataset.demo;
+  const loop=kind==="launch"?launchDemo(demo):kind==="commerce"?commerceDemo(demo):kind==="systems"?systemsDemo(demo):null;
+  if(!loop)return;
+  ScrollTrigger.create({trigger:demo,start:"top 92%",end:"bottom 8%",onEnter:()=>loop.play(),onEnterBack:()=>loop.play(),onLeave:()=>loop.pause(),onLeaveBack:()=>loop.pause()})
+ })
+}
+
 function Navigation(){
  const pathname=usePathname();const [open,setOpen]=useState(false);const go=useContext(NavContext);
  return <header className={`site-nav ${open?"menu-is-open":""}`} data-theme="hero">
@@ -61,7 +157,7 @@ export function SiteFrame({children}:{children:React.ReactNode}){
    gsap.utils.toArray<HTMLElement>("[data-fill]").forEach(el=>gsap.fromTo(el.querySelectorAll("span"),{opacity:.16},{opacity:1,stagger:.06,ease:"none",scrollTrigger:{trigger:el,start:"top 80%",end:"bottom 55%",scrub:true}}));
    gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach(el=>gsap.fromTo(el,{yPercent:14},{yPercent:-14,ease:"none",scrollTrigger:{trigger:el.parentElement,start:"top bottom",end:"bottom top",scrub:true}}));
    gsap.utils.toArray<HTMLElement>("[data-count]").forEach(el=>{const end=Number(el.dataset.count||0);if(reduce){el.textContent=String(end);return}const counter={value:0};gsap.to(counter,{value:end,duration:1.5,ease:"power2.out",scrollTrigger:{trigger:el.closest(".number-grid")||el,start:"top 82%",once:true},onUpdate:()=>{el.textContent=String(Math.round(counter.value))}})});
-   gsap.utils.toArray<HTMLElement>(".offer-demo").forEach((demo,index)=>{const items=demo.querySelectorAll<HTMLElement>("[data-demo-item]");const bars=demo.querySelectorAll<HTMLElement>("[data-demo-bar]");const pulses=demo.querySelectorAll<HTMLElement>("[data-demo-pulse]");if(reduce){gsap.set(items,{autoAlpha:1,y:0});gsap.set(bars,{scaleX:1});return}gsap.set(bars,{scaleX:0,transformOrigin:"left center"});const loop=gsap.timeline({paused:true,repeat:-1,repeatDelay:.65,delay:index*.12}).fromTo(items,{autoAlpha:.28,y:7},{autoAlpha:1,y:0,duration:.55,stagger:.3,ease:"power3.out"}).to(bars,{scaleX:1,duration:.9,stagger:.18,ease:"power2.inOut"},.15).to(pulses,{scale:1.16,duration:.35,yoyo:true,repeat:1,ease:"power2.inOut"},.65).to({}, {duration:1.25}).to(items,{autoAlpha:.28,duration:.4,stagger:.1}).set(bars,{scaleX:0});ScrollTrigger.create({trigger:demo,start:"top 92%",end:"bottom 8%",onEnter:()=>loop.play(),onEnterBack:()=>loop.play(),onLeave:()=>loop.pause(),onLeaveBack:()=>loop.pause()})});
+   initOfferDemos(reduce);
    document.querySelectorAll<HTMLElement>("[data-nav-theme]").forEach(section=>ScrollTrigger.create({trigger:section,start:"top 10%",end:"bottom 10%",onEnter:()=>document.querySelector(".site-nav")?.setAttribute("data-theme",section.dataset.navTheme||"light"),onEnterBack:()=>document.querySelector(".site-nav")?.setAttribute("data-theme",section.dataset.navTheme||"light")}));
   });
   return()=>{window.removeEventListener("pageshow",restoreFromHistory);ctx.revert();ScrollTrigger.getAll().forEach(t=>t.kill());gsap.ticker.remove(tick);lenis.destroy()}
