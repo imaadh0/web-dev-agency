@@ -113,7 +113,7 @@ function initOfferDemos(reduce:boolean){
  })
 }
 
-const menuPages=[...pages,{href:"/pricing",label:"Pricing"},{href:"/contact",label:"Contact"}];
+const menuPages=[...pages,{href:"/contact",label:"Contact"}];
 const MENU_SHUT="ellipse(145% 0% at 50% -2%)",MENU_OPEN="ellipse(155% 138% at 50% -2%)",LS_WIDE=.6,LS_TIGHT=-.045;
 function Navigation(){
  const pathname=usePathname();const [open,setOpen]=useState(false);const go=useContext(NavContext);
