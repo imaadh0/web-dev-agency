@@ -1,5 +1,5 @@
 import {TransitionLink} from "./SiteFrame";
-export {TransitionLink} from "./SiteFrame";
+export {TransitionLink,CalendlyLink} from "./SiteFrame";
 
 export const projectData={
  "oyo-eats":{name:"OYO Eats",tag:"Food delivery",url:"oyoeats.lk",logo:"/logos/oyo-eats.png",tone:"lime",summary:"A custom delivery platform connecting local restaurants with customers through a fast, intuitive ordering experience.",challenge:"Turn a growing restaurant operation into a clear digital journey without slowing customers down at the point of choice.",solution:"We created a mobile-first ordering architecture, focused product discovery and a visual system that keeps food, availability and delivery status easy to understand.",metrics:[["45%","Increase in orders"],["3.2×","Faster load times"],["98%","Customer satisfaction"]],shots:["/case-studies/oyo-eats/shot-1.png","/case-studies/oyo-eats/shot-2.png","/case-studies/oyo-eats/shot-3.png","/case-studies/oyo-eats/shot-4.png"]},

@@ -10,9 +10,15 @@ import Lenis from "lenis";
 const pages=[
  {href:"/portfolio",label:"Portfolio"},{href:"/about",label:"About"},{href:"/services",label:"Services"}
 ];
+export const CALENDLY_URL="https://calendly.com/imaadhifthikar123/30min";
+declare global{interface Window{Calendly?:{initPopupWidget:(opts:{url:string})=>void}}}
+const openCalendly=(e:React.MouseEvent)=>{e.preventDefault();window.Calendly?.initPopupWidget({url:CALENDLY_URL})};
 const NavContext=createContext<(href:string)=>void>(()=>{});
 export function TransitionLink({href,children,className=""}:{href:string;children:React.ReactNode;className?:string}){
  const go=useContext(NavContext);return <a href={href} className={className} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&e.button===0){e.preventDefault();go(href)}}}>{children}</a>
+}
+export function CalendlyLink({children,className=""}:{children:React.ReactNode;className?:string}){
+ return <a href={CALENDLY_URL} className={className} onClick={openCalendly}>{children}</a>
 }
 
 function Arrow(){return <span className="ui-arrow" aria-hidden><i /></span>}
@@ -159,7 +165,7 @@ function Navigation(){
     <div className="nav-overlay-aside">
      <span className="nav-aside-label" data-nav-fade>Get in touch</span>
      <a href="mailto:hello@fortypixels.com" className="nav-aside-mail" data-nav-fade>hello@fortypixels.com</a>
-     <a href="/contact" className="nav-aside-book" data-nav-fade onClick={e=>{e.preventDefault();setOpen(false);go("/contact")}}>Book a discovery call <Arrow/></a>
+     <a href={CALENDLY_URL} className="nav-aside-book" data-nav-fade onClick={e=>{setOpen(false);openCalendly(e)}}>Book a discovery call <Arrow/></a>
      <span className="nav-aside-loc" data-nav-fade>Colombo, Sri Lanka<b>© 2026 Forty Pixels</b></span>
     </div>
     <nav className="nav-overlay-links" aria-label="Primary navigation">
@@ -182,7 +188,7 @@ function Footer(){
    <div className="footer-main">
     <div className="footer-identity"><Link href="/" className="footer-mark"><span>FORTY</span><span>PIXELS<span className="lime-dot">.</span></span></Link><div className="footer-location"><span>COLOMBO, SRI LANKA</span><span>© 2026 FORTY PIXELS</span></div></div>
     <div className="footer-directory">
-     <div><span className="footer-label">Pages</span><div className="footer-list"><TransitionLink href="/about">About</TransitionLink><TransitionLink href="/portfolio">Portfolio</TransitionLink><TransitionLink href="/services">Services</TransitionLink><TransitionLink href="/contact">Contact</TransitionLink></div></div><div><span className="footer-label">Start a project</span><a href="mailto:hello@fortypixels.com" className="footer-email">hello@fortypixels.com <Arrow/></a><a href="https://calendly.com/" target="_blank" rel="noreferrer" className="footer-book">Book a discovery call <Arrow/></a><form className="footer-subscribe" action="mailto:hello@fortypixels.com" method="post" encType="text/plain"><div><input id="footer-email" type="email" name="newsletter" required placeholder="Your email"/><button className="footer-subscribe-btn" type="submit"><span>Sign up</span><span className="ui-arrow" aria-hidden><i /></span></button></div></form></div>
+     <div><span className="footer-label">Pages</span><div className="footer-list"><TransitionLink href="/about">About</TransitionLink><TransitionLink href="/portfolio">Portfolio</TransitionLink><TransitionLink href="/services">Services</TransitionLink><TransitionLink href="/contact">Contact</TransitionLink></div></div><div><span className="footer-label">Start a project</span><a href="mailto:hello@fortypixels.com" className="footer-email">hello@fortypixels.com <Arrow/></a><CalendlyLink className="footer-book">Book a discovery call <Arrow/></CalendlyLink><form className="footer-subscribe" action="mailto:hello@fortypixels.com" method="post" encType="text/plain"><div><input id="footer-email" type="email" name="newsletter" required placeholder="Your email"/><button className="footer-subscribe-btn" type="submit"><span>Sign up</span><span className="ui-arrow" aria-hidden><i /></span></button></div></form></div>
 
 
      <div className="footer-socials"><span className="footer-label">Follow</span><div><a href="https://www.instagram.com/fortypixelshq?igsh=a3IxdTFhNG51M3lo" target="_blank" rel="noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" strokeWidth="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" strokeWidth="1.8"/><circle cx="17.5" cy="6.5" r="1.1"/></svg></a><a href="https://www.facebook.com/share/1ES17DmX73/?mibextid=wwXIfr" target="_blank" rel="noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.75l.5-3H13.5V9.05c0-.87.29-1.55 1.6-1.55h1.78V4.82c-.31-.04-1.37-.14-2.6-.14-2.57 0-4.33 1.57-4.33 4.45V11H7.1v3h2.85v8h3.55Z"/></svg></a><a href="https://www.tiktok.com/@fortypixels?_r=1&_t=ZS-987GVE4x7R7" target="_blank" rel="noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.5c.6 2.2 2 3.7 4.5 4v3.2c-1.9-.1-3.4-.7-4.5-1.5v6.9a5.9 5.9 0 1 1-5.1-5.85v3.3a2.7 2.7 0 1 0 1.9 2.55V3.5h3.2Z"/></svg></a></div></div>
