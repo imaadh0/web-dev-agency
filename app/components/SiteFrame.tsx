@@ -176,7 +176,8 @@ function Navigation(){
 }
 
 function Footer(){
- return <footer className="sstr-footer" data-nav-theme="dark">
+ const pathname=usePathname();
+ return <footer className={`sstr-footer${pathname==="/contact"?" footer-pad-top":""}`} data-nav-theme="dark">
   <div className="footer-shell">
    <div className="footer-main">
     <div className="footer-identity"><Link href="/" className="footer-mark"><span>FORTY</span><span>PIXELS<span className="lime-dot">.</span></span></Link><div className="footer-location"><span>COLOMBO, SRI LANKA</span><span>© 2026 FORTY PIXELS</span></div></div>
