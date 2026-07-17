@@ -113,18 +113,65 @@ function initOfferDemos(reduce:boolean){
  })
 }
 
+const menuPages=[...pages,{href:"/pricing",label:"Pricing"},{href:"/contact",label:"Contact"}];
+const MENU_SHUT="ellipse(145% 0% at 50% -2%)",MENU_OPEN="ellipse(155% 138% at 50% -2%)",LS_WIDE=.6,LS_TIGHT=-.045;
 function Navigation(){
  const pathname=usePathname();const [open,setOpen]=useState(false);const go=useContext(NavContext);
+ const overlay=useRef<HTMLDivElement>(null);const tlRef=useRef<gsap.core.Timeline|null>(null);const mounted=useRef(false);
+ /* Curved-edge sweep: the panel is an ellipse anchored above the viewport, so its
+    leading edge arcs as it grows. Links resolve by converging their letter-spacing. */
+ useEffect(()=>{
+  const el=overlay.current;if(!el)return;
+  const links=el.querySelectorAll<HTMLElement>(".nav-link-text");const fades=el.querySelectorAll<HTMLElement>("[data-nav-fade]");
+  if(!mounted.current){mounted.current=true;gsap.set(el,{clipPath:MENU_SHUT,visibility:"hidden"});return}
+  tlRef.current?.kill();
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){
+   gsap.set(el,{clipPath:"none",visibility:open?"visible":"hidden"});
+   links.forEach(l=>{l.style.letterSpacing=`${LS_TIGHT}em`});
+   gsap.set([...links,...fades],{opacity:open?1:0,y:0});return
+  }
+  /* letter-spacing is driven off a proxy: GSAP mis-parses em units on this property. */
+  const spread=(tl:gsap.core.Timeline,from:number,to:number,dur:number,ease:string,at:(i:number)=>number)=>
+   links.forEach((l,i)=>{const o={v:from};tl.to(o,{v:to,duration:dur,ease,onUpdate:()=>{l.style.letterSpacing=`${o.v.toFixed(4)}em`}},at(i))});
+  if(open){
+   links.forEach(l=>{l.style.letterSpacing=`${LS_WIDE}em`});
+   const tl=gsap.timeline()
+    .set(el,{visibility:"visible"})
+    .fromTo(el,{clipPath:MENU_SHUT},{clipPath:MENU_OPEN,duration:.85,ease:"power3.inOut"})
+    .fromTo(links,{opacity:.12},{opacity:1,duration:.8,stagger:.07,ease:"power3.out"},.4)
+    .fromTo(fades,{y:14,opacity:0},{y:0,opacity:1,duration:.5,stagger:.05,ease:"power2.out"},.5);
+   spread(tl,LS_WIDE,LS_TIGHT,.8,"power3.out",i=>.4+i*.07);
+   tlRef.current=tl
+  }else{
+   const n=links.length,tl=gsap.timeline()
+    .to(fades,{opacity:0,duration:.25,ease:"power2.in"},0)
+    .to(links,{opacity:0,duration:.4,stagger:{each:.045,from:"end"},ease:"power2.in"},0);
+   spread(tl,LS_TIGHT,LS_WIDE,.4,"power2.in",i=>(n-1-i)*.045);
+   tl.to(el,{clipPath:MENU_SHUT,duration:.7,ease:"power3.inOut"},.35).set(el,{visibility:"hidden"});
+   tlRef.current=tl
+  }
+ },[open]);
+ useEffect(()=>{const k=(e:KeyboardEvent)=>{if(e.key==="Escape")setOpen(false)};window.addEventListener("keydown",k);return()=>window.removeEventListener("keydown",k)},[]);
  return <header className={`site-nav ${open?"menu-is-open":""}`} data-theme="hero">
   <div className="nav-blur">{[1,2,3,4,5].map(i=><i key={i}/>)}</div>
+  <div className="nav-overlay" ref={overlay} aria-hidden={!open}>
+   <div className="nav-overlay-inner">
+    <div className="nav-overlay-aside">
+     <span className="nav-aside-label" data-nav-fade>Get in touch</span>
+     <a href="mailto:hello@fortypixels.com" className="nav-aside-mail" data-nav-fade>hello@fortypixels.com</a>
+     <a href="/contact" className="nav-aside-book" data-nav-fade onClick={e=>{e.preventDefault();setOpen(false);go("/contact")}}>Book a discovery call <Arrow/></a>
+     <span className="nav-aside-loc" data-nav-fade>Colombo, Sri Lanka<b>© 2026 Forty Pixels</b></span>
+    </div>
+    <nav className="nav-overlay-links" aria-label="Primary navigation">
+     {menuPages.map((p,i)=><a key={p.href} href={p.href} className={pathname===p.href||pathname.startsWith(`${p.href}/`)?"active":""} onClick={e=>{e.preventDefault();go(p.href)}}><span className="nav-link-text">{p.label}</span><em data-nav-fade>0{i+1}</em></a>)}
+    </nav>
+   </div>
+  </div>
   <div className="nav-bar">
    <Link href="/" className="nav-logo" onClick={e=>{e.preventDefault();go("/")}} aria-label="Forty Pixels home"><span className="nav-logo-mark"><img src="/brand/logo.png" alt="Forty Pixels"/><img className="nav-logo-contrast" src="/brand/logo.png" alt="" aria-hidden="true"/></span></Link>
-   <nav className="nav-cells" aria-label="Primary navigation">{pages.map(p=><a key={p.href} href={p.href} className={pathname===p.href||pathname.startsWith(`${p.href}/`)?"active":""} onClick={e=>{e.preventDefault();go(p.href)}}>{p.label}</a>)}</nav>
-   <a href="/contact" className={`nav-contact ${pathname==="/contact"?"active":""}`} onClick={e=>{e.preventDefault();go("/contact")}}>Contact <Arrow/></a>
-   <button className="nav-toggle" onClick={()=>setOpen(v=>!v)} aria-expanded={open} aria-label={open?"Close menu":"Open menu"}><span>{open?"×":"Menu"}</span></button>
+   <a href="/contact" className={`nav-contact ${pathname==="/contact"?"active":""}`} onClick={e=>{e.preventDefault();go("/contact")}}>Get in touch <Arrow/></a>
+   <button className="nav-toggle" onClick={()=>setOpen(v=>!v)} aria-expanded={open} aria-label={open?"Close menu":"Open menu"}><span className="nav-toggle-icon" aria-hidden="true"><i/><i/></span></button>
   </div>
-  <div className="mobile-panel" aria-hidden={!open}>{[...pages,{href:"/contact",label:"Contact"}].map((p,i)=><a key={p.href} href={p.href} className={pathname===p.href?"active":""} onClick={e=>{e.preventDefault();go(p.href)}}><small>0{i+1}</small><span>{p.label}</span><Arrow/></a>)}</div>
-  <button className="menu-scrim" aria-label="Close menu" onClick={()=>setOpen(false)}/>
  </header>
 }
 
