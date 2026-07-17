@@ -98,7 +98,7 @@ img,video{max-width:100%}img{height:auto}input,select,textarea,button{max-width:
 .offer-demo .demo-ripple{position:absolute;inset:-5px;border:1.5px solid #6842ce;border-radius:9px;opacity:0;pointer-events:none}
 .offer-demo .commerce-flow{position:relative}
 .offer-demo .commerce-fly{position:absolute;z-index:5;left:0;top:0;width:8px;height:8px;border-radius:50%;background:#6842ce;box-shadow:0 0 0 3px #6842ce2e;opacity:0;pointer-events:none}
-.offer-demo .commerce-step>i{display:inline-block}
+.offer-demo .commerce-step>i{display:grid}
 .offer-demo .system-lines{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:visible}
 .offer-demo .system-lines line{stroke:#7750d5;stroke-width:.6;fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
 @media(prefers-reduced-motion:reduce){.offer-demo .system-lines line{stroke-dashoffset:0!important}}
