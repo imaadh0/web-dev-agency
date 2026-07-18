@@ -186,8 +186,8 @@ img,video{max-width:100%}img{height:auto}input,select,textarea,button{max-width:
 .logo-track img[src*='noora-modesty']{filter:brightness(0)!important}.logo-track img[src*='forte-logo']{filter:brightness(0)!important}.browser-frame img[src*='forte-logo'],.case-browser img[src*='forte-logo']{filter:brightness(0)!important}
 .case-logo-dark{filter:brightness(0)!important}
 /* Normalize logo artwork with uneven transparent canvas padding. */
-.browser-frame img,.case-browser img{transform:translateY(-12%)}
-.case-logo-dark{filter:brightness(0)!important;transform:translateY(-42%)!important}
+.browser-frame img,.case-browser img{display:block;transform:none}
+.case-logo-dark{filter:brightness(0)!important;transform:none!important}
 
 .logo-track img[src*='noora-modesty'],.logo-track img[src*='forte-logo']{transform:scale(1.45)}
 
