@@ -8,7 +8,7 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
 const pages=[
- {href:"/portfolio",label:"Portfolio"},{href:"/about",label:"About"},{href:"/services",label:"Services"}
+ {href:"/",label:"Home"},{href:"/portfolio",label:"Portfolio"},{href:"/about",label:"About"},{href:"/services",label:"Services"}
 ];
 export const CALENDLY_URL="https://calendly.com/imaadhifthikar123/30min";
 declare global{interface Window{Calendly?:{initPopupWidget:(opts:{url:string})=>void}}}
